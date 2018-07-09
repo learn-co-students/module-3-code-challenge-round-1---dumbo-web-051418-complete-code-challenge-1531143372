@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  const imageId = 1 //Enter your assigned imageId here
+  const imageId = 7 //1 //Enter your assigned imageId here
 
   const imageURL = `https://randopic.herokuapp.com/images/${imageId}`
 
@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const commentsURL = `https://randopic.herokuapp.com/comments/`
 
+  Image.showImage(imageId)
 
+  Image.commentImage();
 
 })
-
