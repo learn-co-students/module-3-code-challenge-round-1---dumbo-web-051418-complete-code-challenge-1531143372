@@ -11,7 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const imgCard = document.querySelector('#image-card')
 
   adapter.getImage() //needs render comment functionality
-    .then(obj => controller.render(obj))
+    .then(obj => {
+      controller.render(obj)
+      const sortedComments = obj.comments
+      sortedComments.sort((comment1,comment2)=>{
+        return parseInt(comment1.id) - parseInt(comment2.id)
+      })
+      // console.log(sortedComments)
+      sortedComments.forEach(comment => {controller.renderComment(comment.content)})
+
+    })
 
   imgCard.addEventListener('click', e => {
     if (e.target.id === 'like-button') {
