@@ -72,7 +72,7 @@ const postLike = (like) => {
 
 
 //i would actually want the list of comments in here to be a collection
-//most likely an array
+//most likely an array of objects
 //so that when i render the comments on to the page i can iterate through them
 const postComment = (comment) => {
     fetch('https://randopic.herokuapp.com/comments/', {
