@@ -1,3 +1,6 @@
+// My attempt to create something object oriented 10 minutes before time due
+// Not complete
+
 document.addEventListener('DOMContentLoaded', function() {
 
   const imageId = 11 //Enter your assigned imageId here
@@ -5,7 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const likeURL = `https://randopic.herokuapp.com/likes/`
   const commentsURL = `https://randopic.herokuapp.com/comments/`
 
-  fetch(imageURL).then(r => r.json()).then((imageData)=>{
+  const adapter = new Adapter()
+
+  adapter.renderImage().then((imageData)=>{
     const imageEl = document.querySelector("#image")
     imageEl.setAttribute("src", imageData.url)
 
@@ -18,20 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const commentsUlEl = document.querySelector("#comments")
 
-    // My attempt to sort the comments, but I predict I will run out of time here
-    const unsortedComments = imageData.comments
-    let sortedComments = unsortedComments.sort((x,y) => {
-      if (x.id < y.id) {
-        return -1
-      } else if (y.id < x.id) {
-        return 1
-      } else {
-        return 0
-      }
-    })
-    // End attempt to sort the comments
-
-    sortedComments.forEach((comment) => {
+    imageData.comments.forEach((comment) => {
       const liEl = document.createElement("li")
       const commentEl = document.createTextNode(comment.content)
       liEl.appendChild(commentEl)
@@ -46,18 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let updatedLikes = ++currentLikes
     likesEl.innerHTML = updatedLikes
 
-    const data = {image_id: imageId, like_count: updatedLikes}
-
-    const options = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }
-    fetch('https://randopic.herokuapp.com/likes', options)
-    .then(r => r.json())
+    adapter.persistLikes(updatedLikes)
   })
 
 
@@ -70,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const liEl = document.createElement("li")
     const commentEl = document.createTextNode(submittedComment)
     liEl.appendChild(commentEl)
-    commentsUlEl.appendChild(liEl)
+    commentsUlEl.prepend(liEl)
     e.target.reset()
 
     const data = {image_id: imageId, content: submittedComment}
