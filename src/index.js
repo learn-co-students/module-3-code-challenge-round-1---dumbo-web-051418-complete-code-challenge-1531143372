@@ -20,7 +20,7 @@ const commentList = document.createElement('ul');
 
 const renderImage = (jsonResponse) => {
   let imgDiv = document.createElement('div')
-  let imgHtml = `<img src=${jsonResponse.url}></img>`
+  let imgHtml = `<img src=${jsonResponse.url}></img><h4>${jsonResponse.name}</h4>`
   //rendering likes here too
   let likes = jsonResponse.like_count.toString()
   likeCount.innerText = likes;
