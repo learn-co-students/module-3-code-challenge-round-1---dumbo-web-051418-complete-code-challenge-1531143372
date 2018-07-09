@@ -24,14 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // get image comments
   Adapter.getImageComments(imageId)
     .then(data => {
-      // tried sorting by last id or comment created 
-      // sortedArray = []
-      // data.comments.forEach((cmt)=>{
-      //   sortedArray.push([cmt.id, cmt.content])
-      // })
-      //
-      // debugger
-      data.comments.forEach((comment) => {
+      data.comments.sort((x,y)=>{return y.id - x.id}).forEach((comment)=>{
         const cmt = new Comment(comment)
         commentsList.innerHTML += cmt.render()
       })
